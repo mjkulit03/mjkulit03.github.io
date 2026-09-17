@@ -1,1419 +1,767 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeffrei Edmar F. Manahan | IT Manager &amp; InfoSec Leader</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-deep: #030810;
-            --bg-primary: #060d1a;
-            --bg-secondary: #0c1829;
-            --bg-card: #0d1f35;
-            --bg-card-hover: #122a45;
-            --cyber-cyan: #00f0ff;
-            --cyber-green: #00ff88;
-            --cyber-blue: #0080ff;
-            --cyber-purple: #a855f7;
-            --cyber-pink: #ff0080;
-            --cyber-amber: #ffb800;
-            --text-primary: #e8f0fe;
-            --text-secondary: #8fa8c8;
-            --text-muted: #4a6a8a;
-            --border-glow: rgba(0, 240, 255, 0.15);
-            --border-dim: rgba(0, 240, 255, 0.06);
-            --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.3);
-            --glow-green: 0 0 20px rgba(0, 255, 136, 0.3);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-deep);
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeffrei Edmar F. Manahan — IT Manager &amp; Information Security Leader</title>
+<meta name="description" content="Jeffrei Edmar F. Manahan — IT Manager and Information Security &amp; Infrastructure leader with 15+ years across banking and public utilities.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F8F6F1;
+    --paper-raised:#FFFFFF;
+    --ink:#14181F;
+    --navy:#1B2A4A;
+    --navy-deep:#101B33;
+    --navy-edge:#0A1120;
+    --slate:#57606F;
+    --slate-light:#868FA0;
+    --line:#DDD8CC;
+    --line-strong:#C7C0AE;
+    --brass:#8E6E37;
+    --brass-deep:#6E5327;
+    --brass-tint:#F1E8D3;
+    --serif:'Fraunces', Georgia, serif;
+    --sans:'IBM Plex Sans', -apple-system, Helvetica, Arial, sans-serif;
+    --mono:'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+    --maxw:1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:88px;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 2rem;}
+  section{padding:5.5rem 0;}
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:600;color:var(--navy-deep);letter-spacing:-0.01em;}
 
-        /* MATRIX CANVAS */
-        #matrix-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            opacity: 0.06;
-            pointer-events: none;
-        }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--brass);
+    outline-offset:3px;
+  }
 
-        /* SCAN LINE */
-        .scanline {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.008) 2px, rgba(0,240,255,0.008) 4px);
-        }
-        .scanline::after {
-            content: '';
-            position: absolute;
-            top: -100%; left: 0;
-            width: 100%; height: 4px;
-            background: linear-gradient(90deg, transparent, var(--cyber-cyan), transparent);
-            opacity: 0.4;
-            animation: scanMove 8s linear infinite;
-        }
-        @keyframes scanMove { 0% { top: -2%; } 100% { top: 102%; } }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+  }
 
-        /* NAVIGATION */
-        header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(3,8,16,0.88);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--border-dim);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        header.scrolled {
-            border-bottom-color: var(--border-glow);
-            box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 0 60px rgba(0,240,255,0.03);
-        }
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-        .logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--cyber-cyan);
-            text-decoration: none;
-            letter-spacing: 0.1em;
-            text-shadow: 0 0 10px rgba(0,240,255,0.5);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-        .logo-icon {
-            width: 32px; height: 32px;
-            border: 2px solid var(--cyber-cyan);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            box-shadow: var(--glow-cyan);
-            position: relative;
-        }
-        .logo-icon::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border: 1px solid rgba(0,240,255,0.2);
-            border-radius: 8px;
-        }
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 0.15rem;
-        }
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.82rem;
-            font-weight: 500;
-            padding: 0.5rem 0.9rem;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.02em;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--cyber-cyan);
-            background: rgba(0,240,255,0.06);
-            text-shadow: 0 0 8px rgba(0,240,255,0.4);
-        }
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: 1px solid var(--border-glow);
-            color: var(--cyber-cyan);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0.4rem 0.6rem;
-            border-radius: 6px;
-            font-family: 'JetBrains Mono', monospace;
-        }
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(248,246,241,0.92);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  header.scrolled{border-bottom-color:var(--line);box-shadow:0 2px 16px rgba(20,24,31,0.05);}
+  nav{
+    max-width:var(--maxw);margin:0 auto;padding:1.1rem 2rem;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .mark{
+    display:flex;align-items:center;gap:0.65rem;
+    text-decoration:none;color:var(--navy-deep);
+  }
+  .mark-seal{
+    width:34px;height:34px;
+    border:1.5px solid var(--navy-deep);
+    border-radius:2px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:600;font-size:0.85rem;
+    background:linear-gradient(155deg,#ffffff,var(--paper) 65%);
+    box-shadow:
+      inset 1px 1px 0 rgba(255,255,255,0.8),
+      inset -1px -1px 0 rgba(20,24,31,0.12),
+      0 1px 2px rgba(20,24,31,0.15);
+  }
+  .mark-name{font-family:var(--serif);font-weight:600;font-size:1rem;}
+  .nav-links{display:flex;list-style:none;gap:0.35rem;}
+  .nav-links a{
+    text-decoration:none;color:var(--slate);
+    font-size:0.87rem;font-weight:500;
+    padding:0.5rem 0.85rem;border-radius:3px;
+    transition:color .2s ease, background .2s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{color:var(--navy-deep);background:rgba(27,42,74,0.06);}
+  .nav-toggle{
+    display:none;background:none;border:1px solid var(--line-strong);
+    color:var(--navy-deep);font-size:1rem;padding:0.4rem 0.65rem;border-radius:3px;
+    cursor:pointer;
+  }
 
-        /* CONTAINER */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:9.5rem 0 4.5rem;
+    position:relative;
+    background-image:repeating-linear-gradient(180deg, rgba(27,42,74,0.035) 0px, rgba(27,42,74,0.035) 1px, transparent 1px, transparent 38px);
+  }
+  .hero-inner{
+    display:grid;grid-template-columns:1.35fr 1fr;gap:3.5rem;align-items:start;
+  }
+  .status-line{
+    display:inline-flex;align-items:center;gap:0.55rem;
+    font-size:0.85rem;color:var(--slate);margin-bottom:1.6rem;
+  }
+  .status-dot{width:7px;height:7px;border-radius:50%;background:#3F7A4C;flex-shrink:0;}
+  .hero h1{
+    font-size:clamp(2.3rem,4.2vw,3.4rem);
+    line-height:1.08;
+    margin-bottom:0.65rem;
+    text-shadow:0 1px 0 rgba(255,255,255,0.6);
+  }
+  .hero .role-line{
+    font-size:1.05rem;color:var(--brass-deep);font-weight:500;
+    margin-bottom:1.5rem;
+    font-family:var(--serif);font-style:italic;
+  }
+  .hero-lede{
+    max-width:52ch;color:var(--slate);font-size:1.04rem;margin-bottom:2.1rem;
+  }
+  .hero-actions{display:flex;gap:0.85rem;flex-wrap:wrap;margin-bottom:2.4rem;}
+  .btn{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    padding:0.75rem 1.4rem;border-radius:3px;
+    font-size:0.9rem;font-weight:600;text-decoration:none;
+    transition:background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease, box-shadow .12s ease;
+    border:1px solid transparent;
+    transform:translateY(0);
+  }
+  .btn-primary{
+    background:var(--navy-deep);color:var(--paper);
+    box-shadow:0 3px 0 var(--navy-edge), 0 8px 18px -6px rgba(16,27,51,0.35);
+  }
+  .btn-primary:hover{background:var(--navy);}
+  .btn-primary:active{transform:translateY(3px);box-shadow:0 0 0 var(--navy-edge), 0 3px 6px rgba(16,27,51,0.25);}
+  .btn-secondary{
+    background:var(--paper-raised);color:var(--navy-deep);border-color:var(--line-strong);
+    box-shadow:0 3px 0 var(--line-strong), 0 6px 14px -8px rgba(20,24,31,0.18);
+  }
+  .btn-secondary:hover{border-color:var(--navy-deep);}
+  .btn-secondary:active{transform:translateY(3px);box-shadow:0 0 0 var(--line-strong);}
+  .hero-contact{
+    display:flex;flex-wrap:wrap;gap:0;
+    font-size:0.85rem;color:var(--slate);
+  }
+  .hero-contact a{text-decoration:none;color:var(--slate);}
+  .hero-contact a:hover{color:var(--navy-deep);}
+  .hero-contact span{
+    padding:0 0.9rem;border-left:1px solid var(--line-strong);
+  }
+  .hero-contact span:first-child{padding-left:0;border-left:none;}
 
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 10%; right: -10%;
-            width: 700px; height: 700px;
-            background: radial-gradient(circle, rgba(0,240,255,0.04) 0%, transparent 60%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 4rem;
-            align-items: center;
-        }
-        .hero-terminal {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-glow);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow-cyan);
-            animation: fadeInRight 1s ease 0.3s forwards;
-            opacity: 0;
-            transform: translateX(30px);
-        }
-        .terminal-bar {
-            background: var(--bg-card);
-            padding: 0.6rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border-bottom: 1px solid var(--border-dim);
-        }
-        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .terminal-dot.red { background: #ff5f57; }
-        .terminal-dot.yellow { background: #ffbd2e; }
-        .terminal-dot.green { background: #28c840; }
-        .terminal-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-left: 0.5rem;
-        }
-        .terminal-body {
-            padding: 1.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            line-height: 2;
-        }
-        .terminal-line { display: flex; gap: 0.5rem; }
-        .terminal-prompt { color: var(--cyber-green); font-weight: 600; }
-        .terminal-command { color: var(--text-primary); }
-        .terminal-output { color: var(--text-secondary); }
-        .terminal-highlight { color: var(--cyber-cyan); }
-        .terminal-cursor {
-            display: inline-block;
-            width: 8px; height: 16px;
-            background: var(--cyber-cyan);
-            animation: blink 1s step-end infinite;
-            vertical-align: middle;
-            margin-left: 2px;
-        }
-        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-        .hero-content {
-            animation: fadeInUp 0.8s ease 0.1s forwards;
-            opacity: 0;
-        }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(0,255,136,0.06);
-            border: 1px solid rgba(0,255,136,0.2);
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--cyber-green);
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.05em;
-        }
-        .badge-dot {
-            width: 6px; height: 6px;
-            background: var(--cyber-green);
-            border-radius: 50%;
-            animation: pulseDot 2s ease-in-out infinite;
-            box-shadow: 0 0 6px var(--cyber-green);
-        }
-        @keyframes pulseDot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
-        .hero h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: 0.02em;
-            margin-bottom: 0.5rem;
-        }
-        .hero h1 .glitch {
-            position: relative;
-            display: inline-block;
-            color: var(--cyber-cyan);
-            text-shadow: 0 0 10px rgba(0,240,255,0.5);
-        }
-        .hero h1 .glitch::before,
-        .hero h1 .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-        }
-        .hero h1 .glitch::before {
-            animation: glitch1 3s infinite linear alternate-reverse;
-            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-            color: var(--cyber-pink);
-            opacity: 0.6;
-        }
-        .hero h1 .glitch::after {
-            animation: glitch2 3s infinite linear alternate-reverse;
-            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-            color: var(--cyber-green);
-            opacity: 0.6;
-        }
-        @keyframes glitch1 { 0%,95% { transform: translate(0); } 96% { transform: translate(-2px,1px); } 97% { transform: translate(2px,-1px); } 98% { transform: translate(-1px,2px); } 99% { transform: translate(1px,-2px); } 100% { transform: translate(0); } }
-        @keyframes glitch2 { 0%,95% { transform: translate(0); } 96% { transform: translate(2px,-1px); } 97% { transform: translate(-2px,1px); } 98% { transform: translate(1px,-2px); } 99% { transform: translate(-1px,2px); } 100% { transform: translate(0); } }
-        .hero-subtitle {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-            letter-spacing: 0.03em;
-        }
-        .hero-subtitle span { color: var(--cyber-cyan); }
-        .hero-tagline {
-            font-size: 1rem;
-            color: var(--text-muted);
-            max-width: 520px;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 2.5rem;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            font-family: 'Inter', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-blue));
-            color: var(--bg-deep);
-            box-shadow: 0 4px 20px rgba(0,240,255,0.25);
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-        .btn-primary:hover::before { transform: translateX(100%); }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0,240,255,0.4);
-        }
-        .btn-ghost {
-            background: transparent;
-            color: var(--cyber-cyan);
-            border: 1px solid rgba(0,240,255,0.3);
-        }
-        .btn-ghost:hover {
-            background: rgba(0,240,255,0.06);
-            border-color: var(--cyber-cyan);
-            box-shadow: var(--glow-cyan);
-            transform: translateY(-2px);
-        }
-        .hero-metrics {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-        .metric {
-            text-align: center;
-            padding: 1rem 0.5rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-dim);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-        .metric:hover {
-            border-color: var(--border-glow);
-            box-shadow: var(--glow-cyan);
-        }
-        .metric-value {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--cyber-cyan);
-            text-shadow: 0 0 10px rgba(0,240,255,0.4);
-            line-height: 1.2;
-        }
-        .metric-label {
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-family: 'JetBrains Mono', monospace;
-            margin-top: 0.25rem;
-        }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+  .panel-3d-wrap{
+    position:relative;
+    perspective:1400px;
+  }
+  .panel-ghost{
+    position:absolute;inset:0;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:var(--paper-raised);
+    pointer-events:none;
+  }
+  .panel-ghost-1{
+    transform:translate3d(9px,11px,-45px) rotate(2.2deg);
+    opacity:0.7;
+    box-shadow:0 14px 28px -14px rgba(20,24,31,0.2);
+  }
+  .panel-ghost-2{
+    transform:translate3d(18px,22px,-90px) rotate(4deg);
+    opacity:0.4;
+    box-shadow:0 14px 28px -14px rgba(20,24,31,0.15);
+  }
+  .hero-panel{
+    position:relative;z-index:2;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1.9rem 1.9rem 1.6rem;
+    transform-style:preserve-3d;
+    transform:perspective(1400px) rotateX(0deg) rotateY(0deg) translateZ(0px);
+    transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
+    box-shadow:0 24px 46px -18px rgba(20,24,31,0.22), 0 3px 10px rgba(20,24,31,0.08);
+    will-change:transform;
+  }
+  .hero-panel-title{
+    font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;
+    color:var(--slate-light);margin-bottom:1.3rem;
+  }
+  .panel-row{
+    display:flex;align-items:baseline;justify-content:space-between;
+    padding:0.7rem 0;border-bottom:1px solid var(--line);
+  }
+  .panel-row:last-of-type{border-bottom:none;}
+  .panel-value{font-family:var(--serif);font-weight:600;font-size:1.35rem;color:var(--navy-deep);text-shadow:0 1px 0 rgba(255,255,255,0.7);}
+  .panel-label{font-size:0.82rem;color:var(--slate);text-align:right;max-width:60%;}
+  .panel-note{
+    margin-top:1.2rem;padding-top:1.1rem;border-top:1px solid var(--line);
+    font-size:0.82rem;color:var(--slate);line-height:1.6;
+  }
 
-        /* SECTION COMMONS */
-        section { padding: 5rem 0; position: relative; }
-        .section-header { margin-bottom: 3rem; }
-        .section-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--cyber-cyan);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .section-label::before { content: '//'; opacity: 0.5; }
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            line-height: 1.3;
-        }
-        .section-line {
-            width: 80px; height: 2px;
-            background: linear-gradient(90deg, var(--cyber-cyan), transparent);
-            margin-top: 1rem;
-            box-shadow: 0 0 10px rgba(0,240,255,0.3);
-        }
+  /* ---------- SECTION HEADERS ---------- */
+  .sec-head{margin-bottom:2.4rem;max-width:60ch;}
+  .sec-head .sec-kicker{
+    font-family:var(--mono);font-size:0.72rem;color:var(--brass-deep);
+    margin-bottom:0.55rem;letter-spacing:0.02em;
+  }
+  .sec-head h2{font-size:1.85rem;}
+  .sec-head p{color:var(--slate);margin-top:0.6rem;font-size:0.98rem;}
 
-        /* ABOUT */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-        .about-text p { color: var(--text-secondary); margin-bottom: 1.25rem; font-size: 0.95rem; }
-        .about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .about-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 12px;
-            padding: 1.25rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .about-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 3px; height: 100%;
-            background: var(--cyber-cyan);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .about-card:hover { border-color: var(--border-glow); box-shadow: 0 0 30px rgba(0,240,255,0.05); }
-        .about-card:hover::before { opacity: 1; }
-        .about-card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
-        .about-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
-        .about-card p { font-size: 0.75rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
+  /* ---------- ABOUT ---------- */
+  #about{border-top:1px solid var(--line);}
+  .about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:3.5rem;}
+  .about-body p{color:var(--slate);margin-bottom:1.1rem;max-width:62ch;font-size:1rem;}
+  .about-body p:last-child{margin-bottom:0;}
+  .facts{border-left:2px solid var(--brass-tint);padding-left:1.5rem;}
+  .facts dt{
+    font-family:var(--mono);font-size:0.72rem;color:var(--slate-light);
+    margin-top:1.1rem;margin-bottom:0.25rem;
+  }
+  .facts dt:first-child{margin-top:0;}
+  .facts dd{font-size:0.95rem;color:var(--ink);}
 
-        /* SKILLS */
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
-        .skill-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 14px;
-            padding: 1.75rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-green));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-        .skill-card:hover { border-color: var(--border-glow); box-shadow: 0 8px 40px rgba(0,240,255,0.06); transform: translateY(-4px); }
-        .skill-card:hover::before { transform: scaleX(1); }
-        .skill-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
-        .skill-icon {
-            width: 48px; height: 48px;
-            background: rgba(0,240,255,0.06);
-            border: 1px solid rgba(0,240,255,0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-        }
-        .skill-header h3 { font-size: 1rem; font-weight: 700; }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-        .skill-tag {
-            background: rgba(0,240,255,0.05);
-            border: 1px solid rgba(0,240,255,0.1);
-            color: var(--text-secondary);
-            padding: 0.3rem 0.65rem;
-            border-radius: 5px;
-            font-size: 0.73rem;
-            font-weight: 500;
-            transition: all 0.25s ease;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .skill-tag:hover { background: rgba(0,240,255,0.1); border-color: var(--cyber-cyan); color: var(--cyber-cyan); box-shadow: 0 0 8px rgba(0,240,255,0.15); }
+  /* ---------- COMPETENCIES ---------- */
+  #competencies{border-top:1px solid var(--line);background:var(--paper-raised);}
+  .comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line);}
+  .comp-block{padding:1.7rem 2rem;border-bottom:1px solid var(--line);transition:background .25s ease, box-shadow .25s ease;position:relative;}
+  .comp-block:nth-child(odd){border-right:1px solid var(--line);}
+  .comp-block:hover{
+    background:#ffffff;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -22px 28px -24px rgba(20,24,31,0.22);
+  }
+  .comp-block h3{font-size:1.02rem;color:var(--navy-deep);margin-bottom:0.55rem;font-weight:600;}
+  .comp-block p{color:var(--slate);font-size:0.92rem;line-height:1.75;}
 
-        /* TIMELINE */
-        .timeline { position: relative; padding-left: 2.5rem; }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 5px; top: 0; bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--cyber-cyan), var(--cyber-blue), var(--cyber-purple), transparent);
-            box-shadow: 0 0 8px rgba(0,240,255,0.2);
-        }
-        .timeline-item { position: relative; margin-bottom: 2rem; padding-left: 2rem; }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.5rem; top: 1.5rem;
-            width: 12px; height: 12px;
-            background: var(--cyber-cyan);
-            border-radius: 50%;
-            border: 3px solid var(--bg-deep);
-            box-shadow: 0 0 0 3px rgba(0,240,255,0.2), 0 0 12px rgba(0,240,255,0.4);
-            z-index: 1;
-        }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 14px;
-            padding: 1.75rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .timeline-card::after {
-            content: '';
-            position: absolute;
-            top: 1.5rem; left: -2rem;
-            width: 1.5rem; height: 2px;
-            background: var(--border-glow);
-        }
-        .timeline-card:hover { border-color: var(--border-glow); box-shadow: 0 0 40px rgba(0,240,255,0.04); transform: translateX(6px); }
-        .timeline-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
-        .timeline-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: var(--cyber-green);
-            background: rgba(0,255,136,0.06);
-            border: 1px solid rgba(0,255,136,0.15);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            letter-spacing: 0.03em;
-        }
-        .timeline-role { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem; }
-        .timeline-company { font-size: 0.9rem; color: var(--cyber-cyan); font-weight: 500; margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
-        .timeline-details { list-style: none; }
-        .timeline-details li { position: relative; padding-left: 1.2rem; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.88rem; }
-        .timeline-details li::before { content: '\25B8'; position: absolute; left: 0; color: var(--cyber-cyan); font-size: 0.75rem; }
-        .timeline-details li strong { color: var(--text-primary); font-weight: 600; }
+  /* ---------- EXPERIENCE ---------- */
+  #experience{border-top:1px solid var(--line);}
+  .role{
+    display:grid;grid-template-columns:130px 1fr;gap:2rem;
+    padding:2.1rem 0;border-top:1px solid var(--line);
+  }
+  .role:last-child{padding-bottom:0;}
+  .role-date{
+    font-family:var(--mono);font-size:0.82rem;color:var(--slate);
+    padding-top:0.15rem;
+  }
+  .role-title{font-size:1.18rem;color:var(--navy-deep);margin-bottom:0.15rem;}
+  .role-company{
+    font-family:var(--serif);font-style:italic;color:var(--brass-deep);
+    font-size:0.95rem;margin-bottom:0.9rem;
+  }
+  .role-list{list-style:none;}
+  .role-list li{
+    position:relative;padding-left:1.1rem;margin-bottom:0.55rem;
+    color:var(--slate);font-size:0.95rem;line-height:1.65;
+  }
+  .role-list li::before{
+    content:'';position:absolute;left:0;top:0.62em;
+    width:5px;height:1px;background:var(--brass);
+  }
+  .role-list li strong{color:var(--ink);font-weight:600;}
+  .early-career{
+    padding:1.6rem 0 0;border-top:1px solid var(--line);
+    font-size:0.9rem;color:var(--slate);
+  }
+  .early-career strong{color:var(--ink);}
 
-        /* CERTIFICATIONS */
-        .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem; }
-        .cert-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 12px;
-            padding: 1.25rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .cert-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--cyber-amber), var(--cyber-green));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .cert-card:hover { border-color: rgba(255,184,0,0.2); box-shadow: 0 0 30px rgba(255,184,0,0.05); transform: translateY(-2px); }
-        .cert-card:hover::before { opacity: 1; }
-        .cert-badge {
-            width: 44px; height: 44px; min-width: 44px;
-            background: linear-gradient(135deg, rgba(255,184,0,0.1), rgba(255,184,0,0.03));
-            border: 1px solid rgba(255,184,0,0.2);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-        .cert-details h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.2rem; line-height: 1.3; }
-        .cert-issuer { font-size: 0.72rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
-        .cert-valid {
-            font-size: 0.68rem;
-            color: var(--cyber-green);
-            font-weight: 600;
-            margin-top: 0.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        .cert-valid::before {
-            content: '';
-            width: 5px; height: 5px;
-            background: var(--cyber-green);
-            border-radius: 50%;
-            box-shadow: 0 0 4px var(--cyber-green);
-        }
+  /* ---------- CERTIFICATIONS ---------- */
+  #credentials{border-top:1px solid var(--line);background:var(--paper-raised);}
+  .cert-table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+  .cert-table th{
+    text-align:left;font-family:var(--mono);font-weight:500;
+    font-size:0.72rem;color:var(--slate-light);
+    padding:0 0 0.7rem;border-bottom:1px solid var(--line-strong);
+  }
+  .cert-table td{
+    padding:0.85rem 0;border-bottom:1px solid var(--line);
+    vertical-align:top;color:var(--ink);
+  }
+  .cert-table td.muted{color:var(--slate);}
+  .cert-table tr:last-child td{border-bottom:none;}
+  .cert-status{
+    font-family:var(--mono);font-size:0.78rem;color:#3F7A4C;
+    white-space:nowrap;
+  }
 
-        /* TRAINING */
-        .training-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
-        .training-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 14px;
-            padding: 1.75rem;
-            transition: all 0.3s ease;
-        }
-        .training-card:hover { border-color: var(--border-glow); }
-        .training-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .training-list { list-style: none; }
-        .training-list li {
-            padding: 0.45rem 0;
-            border-bottom: 1px solid var(--border-dim);
-            font-size: 0.83rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-            transition: color 0.2s ease;
-        }
-        .training-list li:last-child { border-bottom: none; }
-        .training-list li::before { content: '\25B9'; color: var(--cyber-cyan); font-weight: 700; font-size: 0.75rem; line-height: 1.5; flex-shrink: 0; }
-        .training-list li:hover { color: var(--text-primary); }
+  .training-cols{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;
+    margin-top:2.8rem;padding-top:2.4rem;border-top:1px solid var(--line);
+  }
+  .training-cols h4{
+    font-size:0.95rem;color:var(--navy-deep);margin-bottom:0.9rem;font-weight:600;
+  }
+  .training-cols ul{list-style:none;}
+  .training-cols li{
+    font-size:0.86rem;color:var(--slate);padding:0.4rem 0;
+    border-bottom:1px solid var(--line);
+  }
+  .training-cols li:last-child{border-bottom:none;}
 
-        /* PROJECTS */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 14px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--cyber-green), var(--cyber-cyan));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .project-card:hover { border-color: var(--border-glow); box-shadow: 0 0 35px rgba(0,240,255,0.06); transform: translateY(-4px); }
-        .project-card:hover::before { opacity: 1; }
-        .project-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-        .project-icon {
-            width: 42px; height: 42px;
-            background: rgba(0,255,136,0.06);
-            border: 1px solid rgba(0,255,136,0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-        .project-external {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-family: 'JetBrains Mono', monospace;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            transition: color 0.2s ease;
-        }
-        .project-external:hover { color: var(--cyber-cyan); }
-        .project-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
-        .project-name a { color: var(--text-primary); text-decoration: none; transition: color 0.2s ease; }
-        .project-name a:hover { color: var(--cyber-cyan); }
-        .project-desc { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 1rem; flex-grow: 1; line-height: 1.6; }
-        .project-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding-top: 0.75rem; border-top: 1px solid var(--border-dim); }
-        .project-lang { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
-        .lang-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .project-stat { display: flex; align-items: center; gap: 0.3rem; font-size: 0.73rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
-        .project-updated { font-size: 0.72rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-left: auto; }
-        .project-loading { text-align: center; padding: 3rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
-        .project-loading .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border-glow); border-top-color: var(--cyber-cyan); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 0.75rem; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .projects-github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-            padding: 0.6rem 1.2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.82rem;
-            font-family: 'JetBrains Mono', monospace;
-            transition: all 0.3s ease;
-        }
-        .projects-github-link:hover { border-color: var(--border-glow); color: var(--cyber-cyan); box-shadow: var(--glow-cyan); }
+  /* ---------- EDUCATION ---------- */
+  #education{border-top:1px solid var(--line);}
+  .edu-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    flex-wrap:wrap;gap:0.5rem;
+    padding:1.4rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .edu-title{font-size:1.05rem;color:var(--navy-deep);font-family:var(--serif);font-weight:600;}
+  .edu-meta{font-size:0.88rem;color:var(--slate);}
+  .edu-date{font-family:var(--mono);font-size:0.85rem;color:var(--slate-light);}
 
-        /* EDUCATION */
-        .edu-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 14px;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            max-width: 550px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .edu-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--cyber-cyan); }
-        .edu-card:hover { border-color: var(--border-glow); box-shadow: 0 0 30px rgba(0,240,255,0.05); }
-        .edu-icon {
-            width: 60px; height: 60px; min-width: 60px;
-            background: rgba(0,240,255,0.06);
-            border: 1px solid rgba(0,240,255,0.15);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-        }
-        .edu-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
-        .edu-school { color: var(--cyber-cyan); font-weight: 500; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace; }
-        .edu-year { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.2rem; font-family: 'JetBrains Mono', monospace; }
+  /* ---------- CONTACT ---------- */
+  #contact{border-top:1px solid var(--line);background:var(--paper-raised);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;}
+  .contact-list{list-style:none;}
+  .contact-list li{
+    display:flex;align-items:center;gap:0.9rem;
+    padding:0.95rem 0;border-bottom:1px solid var(--line);
+  }
+  .contact-list li:first-child{padding-top:0;}
+  .contact-icon{
+    width:32px;height:32px;flex-shrink:0;
+    border:1px solid var(--line-strong);border-radius:3px;
+    display:flex;align-items:center;justify-content:center;color:var(--navy-deep);
+    background:linear-gradient(155deg,#ffffff,var(--paper) 70%);
+    box-shadow:inset 1px 1px 0 rgba(255,255,255,0.8), inset -1px -1px 0 rgba(20,24,31,0.1);
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .contact-list li:hover .contact-icon{transform:translateY(-1px);box-shadow:inset 1px 1px 0 rgba(255,255,255,0.9), inset -1px -1px 0 rgba(20,24,31,0.14), 0 4px 10px -4px rgba(20,24,31,0.25);}
+  .contact-icon svg{width:15px;height:15px;}
+  .contact-list a{text-decoration:none;}
+  .contact-label{font-family:var(--mono);font-size:0.7rem;color:var(--slate-light);margin-bottom:0.1rem;}
+  .contact-value{font-size:0.96rem;color:var(--ink);}
+  .contact-list a:hover .contact-value{color:var(--navy);}
 
-        /* CONTACT */
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-        .contact-items { display: flex; flex-direction: column; gap: 1rem; }
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.25rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-        .contact-item:hover { border-color: var(--border-glow); box-shadow: 0 0 25px rgba(0,240,255,0.05); transform: translateX(4px); }
-        .contact-icon {
-            width: 44px; height: 44px; min-width: 44px;
-            background: rgba(0,240,255,0.06);
-            border: 1px solid rgba(0,240,255,0.12);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-        .contact-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 0.1rem; }
-        .contact-value { font-size: 0.9rem; font-weight: 500; }
-        .refs-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); }
-        .refs-title::before { content: '//'; color: var(--cyber-cyan); font-family: 'JetBrains Mono', monospace; opacity: 0.5; }
-        .ref-card { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 12px; padding: 1.1rem; margin-bottom: 0.75rem; transition: all 0.3s ease; }
-        .ref-card:last-child { margin-bottom: 0; }
-        .ref-card:hover { border-color: var(--border-glow); }
-        .ref-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.15rem; }
-        .ref-role { font-size: 0.75rem; color: var(--cyber-cyan); margin-bottom: 0.2rem; font-family: 'JetBrains Mono', monospace; }
-        .ref-phone { font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .refs-title{
+    font-family:var(--mono);font-size:0.72rem;color:var(--slate-light);
+    margin-bottom:1.1rem;
+  }
+  .ref-item{padding:1rem 0 1rem 1.1rem;border-left:2px solid var(--brass-tint);margin-bottom:0.9rem;}
+  .ref-item h4{font-size:0.98rem;color:var(--navy-deep);margin-bottom:0.15rem;}
+  .ref-role{font-size:0.84rem;color:var(--slate);margin-bottom:0.15rem;}
+  .ref-phone{font-family:var(--mono);font-size:0.82rem;color:var(--slate-light);}
 
-        /* FOOTER */
-        footer { border-top: 1px solid var(--border-dim); padding: 2rem 0; text-align: center; position: relative; z-index: 1; }
-        footer p { color: var(--text-muted); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
-        footer .accent { color: var(--cyber-cyan); text-shadow: 0 0 8px rgba(0,240,255,0.3); }
+  footer{border-top:1px solid var(--line);padding:2rem 0;}
+  footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;}
+  footer p{color:var(--slate-light);font-size:0.82rem;}
+  .back-top{
+    color:var(--slate);text-decoration:none;font-size:0.82rem;
+    border:1px solid var(--line-strong);padding:0.4rem 0.85rem;border-radius:3px;
+  }
+  .back-top:hover{color:var(--navy-deep);border-color:var(--navy-deep);}
 
-        /* BACK TO TOP */
-        .back-top {
-            position: fixed;
-            bottom: 2rem; right: 2rem;
-            width: 44px; height: 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            color: var(--cyber-cyan);
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 999;
-            box-shadow: 0 0 20px rgba(0,240,255,0.1);
-        }
-        .back-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .back-top:hover { background: rgba(0,240,255,0.1); box-shadow: var(--glow-cyan); transform: translateY(-3px); }
+  /* hero entrance — single deliberate moment */
+  .hero-text > *{opacity:0;transform:translateY(14px);animation:riseIn .7s ease forwards;}
+  .hero-text > *:nth-child(1){animation-delay:.05s;}
+  .hero-text > *:nth-child(2){animation-delay:.12s;}
+  .hero-text > *:nth-child(3){animation-delay:.19s;}
+  .hero-text > *:nth-child(4){animation-delay:.26s;}
+  .hero-text > *:nth-child(5){animation-delay:.33s;}
+  .panel-3d-wrap{opacity:0;transform:translateY(14px);animation:riseIn .7s ease .38s forwards;}
+  @keyframes riseIn{to{opacity:1;transform:translateY(0);}}
 
-        /* REVEAL */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.7s cubic-bezier(0.16,1,0.3,1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-d1 { transition-delay: 0.1s; }
-        .reveal-d2 { transition-delay: 0.2s; }
-        .reveal-d3 { transition-delay: 0.3s; }
-        .reveal-d4 { transition-delay: 0.4s; }
-
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .hero-terminal { order: -1; max-width: 100%; }
-            .about-grid, .contact-grid { grid-template-columns: 1fr; }
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%; left: 0; right: 0;
-                background: rgba(3,8,16,0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 1rem 2rem;
-                border-bottom: 1px solid var(--border-glow);
-            }
-            .nav-links.open { display: flex; }
-            .mobile-toggle { display: block; }
-        }
-        @media (max-width: 600px) {
-            .container { padding: 0 1.25rem; }
-            .hero-metrics { grid-template-columns: repeat(2, 1fr); }
-            .about-cards { grid-template-columns: 1fr; }
-            .skills-grid, .training-grid, .projects-grid { grid-template-columns: 1fr; }
-            .cert-grid { grid-template-columns: 1fr; }
-            .edu-card { flex-direction: column; text-align: center; }
-            section { padding: 3rem 0; }
-        }
-    </style>
+  @media (max-width:900px){
+    .hero-inner{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .facts{border-left:none;padding-left:0;border-top:2px solid var(--brass-tint);padding-top:1.5rem;margin-top:0.5rem;}
+    .comp-grid{grid-template-columns:1fr;}
+    .comp-block:nth-child(odd){border-right:none;}
+    .contact-grid{grid-template-columns:1fr;gap:2.5rem;}
+    .training-cols{grid-template-columns:1fr;gap:1.8rem;}
+    .nav-links{
+      display:none;position:absolute;top:100%;left:0;right:0;
+      background:var(--paper);border-bottom:1px solid var(--line);
+      flex-direction:column;padding:0.5rem 2rem 1rem;
+    }
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+  }
+  @media (max-width:600px){
+    .container{padding:0 1.25rem;}
+    section{padding:3.5rem 0;}
+    .role{grid-template-columns:1fr;gap:0.4rem;}
+    .role-date{padding-top:0;}
+  }
+</style>
 </head>
 <body>
-    <canvas id="matrix-bg"></canvas>
-    <div class="scanline"></div>
 
-    <!-- HEADER -->
-    <header id="header">
-        <nav>
-            <a href="#" class="logo">
-                <span class="logo-icon">🛡️</span>
-                JFM
-            </a>
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#certifications">Certs</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#training">Training</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+<header id="header">
+  <nav>
+    <a href="#hero" class="mark">
+      <span class="mark-seal">JM</span>
+      <span class="mark-name">Jeffrei Edmar Manahan</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">Menu</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#competencies">Competencies</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#credentials">Credentials</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <!-- HERO -->
-    <section class="hero" id="hero">
-        <div class="container">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        <span class="badge-dot"></span>
-                        CYBERSECURITY &amp; IT LEADERSHIP
-                    </div>
-                    <h1>
-                        <span class="glitch" data-text="JEFFREI EDMAR">JEFFREI EDMAR</span><br>
-                        F. MANAHAN
-                    </h1>
-                    <p class="hero-subtitle">&gt; <span>IT Manager</span> | <span>InfoSec</span> | <span>Infrastructure</span> _</p>
-                    <p class="hero-tagline">
-                        Strategic IT Leader with 15+ years protecting critical infrastructure
-                        across utility and banking sectors. Specialized in security governance,
-                        VAPT, and leading cross-functional teams.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="#experience" class="btn btn-primary">◆ View Experience</a>
-                        <a href="#contact" class="btn btn-ghost">◈ Get in Touch</a>
-                    </div>
-                    <div class="hero-metrics">
-                        <div class="metric">
-                            <div class="metric-value">15+</div>
-                            <div class="metric-label">Years Exp</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">8</div>
-                            <div class="metric-label">Certs</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">5+</div>
-                            <div class="metric-label">InfoSec Yrs</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">23+</div>
-                            <div class="metric-label">BUs Served</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-terminal">
-                    <div class="terminal-bar">
-                        <span class="terminal-dot red"></span>
-                        <span class="terminal-dot yellow"></span>
-                        <span class="terminal-dot green"></span>
-                        <span class="terminal-title">manahan@portfolio ~ %</span>
-                    </div>
-                    <div class="terminal-body">
-                        <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-command">whoami</span></div>
-                        <div class="terminal-output"><span class="terminal-highlight">Jeffrei Edmar F. Manahan</span></div>
-                        <br>
-                        <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-command">cat role.txt</span></div>
-                        <div class="terminal-output">IT Manager &amp; InfoSec Leader</div>
-                        <br>
-                        <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-command">nmap --top-skills .</span></div>
-                        <div class="terminal-output">
-                            <span style="color:var(--cyber-green)">✓</span> Cybersecurity Strategy<br>
-                            <span style="color:var(--cyber-green)">✓</span> VAPT &amp; Pen Testing<br>
-                            <span style="color:var(--cyber-green)">✓</span> Network Architecture<br>
-                            <span style="color:var(--cyber-green)">✓</span> Risk Management<br>
-                            <span style="color:var(--cyber-green)">✓</span> Compliance &amp; Auditing<br>
-                            <span style="color:var(--cyber-green)">✓</span> Team Leadership
-                        </div>
-                        <br>
-                        <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-command">echo $STATUS</span></div>
-                        <div class="terminal-output" style="color:var(--cyber-green)">● AVAILABLE FOR OPPORTUNITIES</div>
-                        <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-cursor"></span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <div class="status-line"><span class="status-dot"></span>Open to IT Manager opportunities</div>
+      <h1>Jeffrei Edmar F. Manahan</h1>
+      <p class="role-line">IT Manager — Information Security &amp; Infrastructure Leadership</p>
+      <p class="hero-lede">15+ years directing technology strategy, budgets, and cross-functional teams across the banking and public-utility sectors — with 5+ years focused on building the security governance programs that protect them.</p>
+      <div class="hero-actions">
+        <a href="Jeffrei_Manahan_IT_Manager_Resume.docx" class="btn btn-primary">Download résumé</a>
+        <a href="#contact" class="btn btn-secondary">Get in touch</a>
+      </div>
+      <div class="hero-contact">
+        <span>San Jose Del Monte, Bulacan</span>
+        <span><a href="tel:+639665890319">0966 589 0319</a></span>
+        <span><a href="mailto:jeff.manahan72@gmail.com">jeff.manahan72@gmail.com</a></span>
+      </div>
+    </div>
+    <div class="panel-3d-wrap" id="panel3d">
+      <div class="panel-ghost panel-ghost-2"></div>
+      <div class="panel-ghost panel-ghost-1"></div>
+      <div class="hero-panel" id="heroPanel">
+        <div class="hero-panel-title">AT A GLANCE</div>
+        <div class="panel-row"><span class="panel-value">15+</span><span class="panel-label">Years in IT &amp; security leadership</span></div>
+        <div class="panel-row"><span class="panel-value">5+</span><span class="panel-label">Years in security governance</span></div>
+        <div class="panel-row"><span class="panel-value">3</span><span class="panel-label">Utility companies led concurrently</span></div>
+        <div class="panel-row"><span class="panel-value">23</span><span class="panel-label">Business units onboarded &amp; trained</span></div>
+        <p class="panel-note">Sectors: banking, public utilities, holding-company infrastructure.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ABOUT -->
-    <section id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="reveal">
-                    <div class="section-header">
-                        <div class="section-label">About Me</div>
-                        <h2 class="section-title">Securing Infrastructure,<br>Enabling Growth</h2>
-                        <div class="section-line"></div>
-                    </div>
-                    <p>I'm an IT Manager and Information Security professional based in San Jose Del Monte, Bulacan, with a career spanning utility and banking industries. My expertise lies at the intersection of cybersecurity governance, network infrastructure, and team leadership.</p>
-                    <p>Currently leading IT strategy for SMC's water utility companies, I oversee multi-entity infrastructure, conduct VAPT assessments, and drive cybersecurity awareness across the organization. My approach combines technical depth with strategic thinking to protect critical business assets while enabling operational growth.</p>
-                </div>
-                <div class="about-cards">
-                    <div class="about-card reveal reveal-d1">
-                        <div class="about-card-icon">🛡️</div>
-                        <h4>Security Governance</h4>
-                        <p>5+ years building &amp; enforcing infosec frameworks across enterprises</p>
-                    </div>
-                    <div class="about-card reveal reveal-d2">
-                        <div class="about-card-icon">🏗️</div>
-                        <h4>Infrastructure</h4>
-                        <p>Network architecture &amp; multi-entity system administration</p>
-                    </div>
-                    <div class="about-card reveal reveal-d3">
-                        <div class="about-card-icon">👥</div>
-                        <h4>Team Leadership</h4>
-                        <p>Cross-functional team management &amp; cybersecurity training</p>
-                    </div>
-                    <div class="about-card reveal reveal-d4">
-                        <div class="about-card-icon">📋</div>
-                        <h4>Compliance</h4>
-                        <p>BSP, BIR, ISO 27001 &amp; regulatory audit management</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container about-grid">
+    <div>
+      <div class="sec-head">
+        <div class="sec-kicker">PROFILE</div>
+        <h2>Securing infrastructure,<br>directing the strategy behind it</h2>
+      </div>
+      <div class="about-body">
+        <p>I'm an IT Manager and Information Security &amp; Infrastructure leader based in San Jose Del Monte, Bulacan, with 15+ years spanning the utility and banking industries. My work sits at the intersection of IT strategy, budget ownership, cybersecurity governance, and team leadership.</p>
+        <p>I currently direct IT strategy for three of SMC's water utility companies — owning multi-entity budgets and staffing, leading VAPT and compliance programs, and driving cybersecurity awareness across the organization. My approach pairs technical depth with business-first thinking: protecting critical infrastructure while giving executives the clarity to make fast, informed decisions.</p>
+      </div>
+    </div>
+    <dl class="facts">
+      <dt>Based in</dt>
+      <dd>San Jose Del Monte, Bulacan, Philippines</dd>
+      <dt>Sectors</dt>
+      <dd>Banking, public utilities, corporate infrastructure</dd>
+      <dt>Core focus</dt>
+      <dd>Security governance, network infrastructure, IT budget &amp; team leadership</dd>
+      <dt>Reporting experience</dt>
+      <dd>IT Directors, business-unit executives, regulators (BSP, BIR, NPC)</dd>
+      <dt>Education</dt>
+      <dd>BS Information Technology, STI College Recto</dd>
+    </dl>
+  </div>
+</section>
 
-    <!-- SKILLS -->
-    <section id="skills">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="section-label">Expertise</div>
-                <h2 class="section-title">Technical Skills</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card reveal reveal-d1">
-                    <div class="skill-header">
-                        <div class="skill-icon">🔒</div>
-                        <h3>Security &amp; Risk Management</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Cybersecurity Strategy</span>
-                        <span class="skill-tag">Threat Management</span>
-                        <span class="skill-tag">Digital Forensics</span>
-                        <span class="skill-tag">VAPT</span>
-                        <span class="skill-tag">Pen Testing</span>
-                        <span class="skill-tag">IT Risk Assessment</span>
-                        <span class="skill-tag">Access Control</span>
-                        <span class="skill-tag">Social Engineering Prev.</span>
-                        <span class="skill-tag">Info Governance</span>
-                        <span class="skill-tag">Compliance Monitoring</span>
-                        <span class="skill-tag">BCP</span>
-                        <span class="skill-tag">Security Analysis</span>
-                    </div>
-                </div>
-                <div class="skill-card reveal reveal-d2">
-                    <div class="skill-header">
-                        <div class="skill-icon">🌐</div>
-                        <h3>Infrastructure &amp; Administration</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Network Admin</span>
-                        <span class="skill-tag">Firewall Mgmt</span>
-                        <span class="skill-tag">System Admin</span>
-                        <span class="skill-tag">IT Documentation</span>
-                        <span class="skill-tag">Project Implementation</span>
-                        <span class="skill-tag">Network Troubleshooting</span>
-                        <span class="skill-tag">Email Admin (cPanel)</span>
-                        <span class="skill-tag">PBX &amp; IP Phone</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- CORE COMPETENCIES -->
+<section id="competencies">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-kicker">CAPABILITIES</div>
+      <h2>Core competencies</h2>
+    </div>
+  </div>
+  <div class="container">
+    <div class="comp-grid">
+      <div class="comp-block">
+        <h3>Leadership &amp; governance</h3>
+        <p>IT strategy &amp; roadmap planning, budget &amp; fiscal management, team leadership &amp; mentorship, vendor &amp; stakeholder management, policy development, change management.</p>
+      </div>
+      <div class="comp-block">
+        <h3>Security &amp; compliance</h3>
+        <p>Cybersecurity strategy &amp; governance, VAPT &amp; penetration testing, digital forensics, IT risk assessment, ISO/IEC 27001 &amp; 27002, BSP / BIR / NPC (RA 10173) compliance, incident response, business continuity planning.</p>
+      </div>
+      <div class="comp-block">
+        <h3>Infrastructure &amp; operations</h3>
+        <p>Network architecture &amp; administration, firewall &amp; endpoint management, multi-entity system administration, cloud fundamentals (AWS), IT documentation.</p>
+      </div>
+      <div class="comp-block">
+        <h3>Project &amp; program management</h3>
+        <p>Process automation, digitization initiatives, cross-functional project delivery, training program design, security awareness programs.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="section-label">Career</div>
-                <h2 class="section-title">Professional Experience</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item reveal">
-                    <div class="timeline-card">
-                        <div class="timeline-top"><span class="timeline-date">2024 – PRESENT</span></div>
-                        <h3 class="timeline-role">IT Specialist (IT Lead)</h3>
-                        <p class="timeline-company">SMC Luzon Clean Water Development Corp</p>
-                        <ul class="timeline-details">
-                            <li><strong>Strategic Leadership:</strong> Execute technology strategy for Water Companies of SMC (Luzon Clean Water, Obando Water, Bulakan Water), aligning IT infrastructure with corporate goals.</li>
-                            <li><strong>Fiscal Management:</strong> Oversee all IT-related budgets and staffing for multiple utility entities.</li>
-                            <li><strong>Security Auditing:</strong> Conduct security audits, awareness training, and firewall management to protect water utility data.</li>
-                            <li><strong>Onboarding &amp; Training:</strong> Lead cybersecurity awareness training across all Water Companies of San Miguel Infrastructure.</li>
-                            <li><strong>Vulnerability Assessment:</strong> Conduct VAPT for the 3 Water Companies of San Miguel Infrastructure.</li>
-                            <li><strong>Network Administration:</strong> Serve as Network and System Administrator for the 3 Water Companies.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-card">
-                        <div class="timeline-top"><span class="timeline-date">2023 – 2024</span></div>
-                        <h3 class="timeline-role">IT Specialist (Information Security)</h3>
-                        <p class="timeline-company">San Miguel Holding Corporation</p>
-                        <ul class="timeline-details">
-                            <li><strong>Governance:</strong> Developed comprehensive security policies and streamlined vulnerability management processes.</li>
-                            <li><strong>Incident Response:</strong> Led fast-resolution efforts for suspicious activity and cyber-attacks.</li>
-                            <li><strong>Digital Forensics:</strong> Led forensic investigations using Encase and Autopsy tools for SMHC / San Miguel Infrastructure.</li>
-                            <li><strong>Training:</strong> Led cybersecurity awareness training for new employees across all 23 Business Units.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-card">
-                        <div class="timeline-top"><span class="timeline-date">2019 – 2023</span></div>
-                        <h3 class="timeline-role">Systems Officer (Officer III)</h3>
-                        <p class="timeline-company">Bank of Makati</p>
-                        <ul class="timeline-details">
-                            <li><strong>Project Lead:</strong> Spearheaded customer record digitization and process automation.</li>
-                            <li><strong>Regulatory Compliance:</strong> Managed action plans for BSP, BIR, and Mother Company IT audits.</li>
-                            <li><strong>Governance:</strong> Developed security policies and streamlined operational processes.</li>
-                            <li><strong>Vendor Relations:</strong> Managed external technology vendor relationships and communicated IT metrics to business leaders.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-card">
-                        <div class="timeline-top"><span class="timeline-date">2017 – 2019</span></div>
-                        <h3 class="timeline-role">IT Head (Deputy) / ISO / Asst. DPO</h3>
-                        <p class="timeline-company">Yuanta Savings Bank Philippines</p>
-                        <ul class="timeline-details">
-                            <li><strong>Governance:</strong> Developed security policies and streamlined vulnerability management processes.</li>
-                            <li><strong>Cybersecurity Ops:</strong> Managed IDS/IPS reporting, proxy configuration, and annual firewall policy reviews.</li>
-                            <li><strong>Network Admin:</strong> Served as Network and System Administrator for Yuanta Savings Bank.</li>
-                            <li><strong>Security Auditing:</strong> Conducted formal security audits and IT Risk Assessments.</li>
-                            <li><strong>People Management:</strong> Recruited and supervised IT personnel, overseeing professional development.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-card">
-                        <div class="timeline-top"><span class="timeline-date">2013 – 2017</span></div>
-                        <h3 class="timeline-role">IT Support &amp; Network Engineer Supervisor</h3>
-                        <p class="timeline-company">Guevent Investments Dev. Corp</p>
-                        <ul class="timeline-details">
-                            <li><strong>Infrastructure Lead:</strong> Supervised network configurations (Cisco/Firewalls) and IP Phone (PBX) deployments.</li>
-                            <li><strong>Reporting:</strong> Managed all IT-related issues, reporting directly to the IT Director.</li>
-                            <li><strong>People Management:</strong> Supervised IT technical support personnel and coordinated resource deployment.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-card">
-                        <div class="timeline-top"><span class="timeline-date">2012 – 2013</span></div>
-                        <h3 class="timeline-role">Clearing Assistant</h3>
-                        <p class="timeline-company">Tong Yang Savings Bank Inc</p>
-                        <ul class="timeline-details">
-                            <li>Responsible for clearing the bank's checks and verifying signatures against bank signature card records.</li>
-                            <li>Managed daily check retrievals from the Philippine Clearing House Corporation (PCHC).</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-card">
-                        <div class="timeline-top"><span class="timeline-date">2010 – 2012</span></div>
-                        <h3 class="timeline-role">Marketing Staff (Graphic Artist)</h3>
-                        <p class="timeline-company">Trinity Marketing Corporation</p>
-                        <ul class="timeline-details">
-                            <li>Managed database backups, software troubleshooting, customer record encoding, and product catalog design updates.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-kicker">CAREER</div>
+      <h2>Professional experience</h2>
+    </div>
 
-    <!-- CERTIFICATIONS -->
-    <section id="certifications">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="section-label">Credentials</div>
-                <h2 class="section-title">Certifications</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="cert-grid">
-                <div class="cert-card reveal reveal-d1"><div class="cert-badge">🏅</div><div class="cert-details"><h4>Fortinet Certified Associate (FCA)</h4><div class="cert-issuer">Cybersecurity</div><div class="cert-valid">Valid through May 2027</div></div></div>
-                <div class="cert-card reveal reveal-d2"><div class="cert-badge">🏅</div><div class="cert-details"><h4>Fortinet Certified Fundamentals (FCF)</h4><div class="cert-issuer">Cybersecurity</div><div class="cert-valid">Valid through July 2027</div></div></div>
-                <div class="cert-card reveal reveal-d3"><div class="cert-badge">🏅</div><div class="cert-details"><h4>Fortinet FortiGate 7.4 Operator</h4><div class="cert-issuer">Fortinet</div><div class="cert-valid">Issued May 2025</div></div></div>
-                <div class="cert-card reveal reveal-d4"><div class="cert-badge">🏅</div><div class="cert-details"><h4>Fortinet NSE 1</h4><div class="cert-issuer">Certified in Cybersecurity</div><div class="cert-valid">Valid through July 2027</div></div></div>
-                <div class="cert-card reveal reveal-d1"><div class="cert-badge">🏅</div><div class="cert-details"><h4>Fortinet NSE 2</h4><div class="cert-issuer">Certified in Cybersecurity</div><div class="cert-valid">Valid through July 2027</div></div></div>
-                <div class="cert-card reveal reveal-d2"><div class="cert-badge">🏅</div><div class="cert-details"><h4>Fortinet NSE 3</h4><div class="cert-issuer">Certified in Cybersecurity</div><div class="cert-valid">Valid through May 2027</div></div></div>
-                <div class="cert-card reveal reveal-d3"><div class="cert-badge">🏅</div><div class="cert-details"><h4>Getting Started in Cybersecurity 3.0</h4><div class="cert-issuer">Fortinet</div><div class="cert-valid">Issued May 2025</div></div></div>
-                <div class="cert-card reveal reveal-d4"><div class="cert-badge">🏅</div><div class="cert-details"><h4>Intro to the Threat Landscape 3.0</h4><div class="cert-issuer">Fortinet</div><div class="cert-valid">Issued July 2025</div></div></div>
-            </div>
-        </div>
-    </section>
+    <div class="role">
+      <div class="role-date">2024 —<br>Present</div>
+      <div>
+        <h3 class="role-title">IT Specialist (IT Head / Lead)</h3>
+        <p class="role-company">SMC Luzon Clean Water Development Corp — San Miguel Infrastructure</p>
+        <ul class="role-list">
+          <li><strong>Strategic leadership:</strong> Directed IT strategy across three SMC water utility companies (Luzon Clean Water, Obando Water, Bulakan Water), aligning infrastructure investment and security roadmaps with corporate goals.</li>
+          <li><strong>Fiscal management:</strong> Owned budget planning and staffing decisions for IT across multiple utility entities, keeping operations running without disruption.</li>
+          <li><strong>Risk reduction:</strong> Cut cyberattack exposure across all three companies by leading enterprise-wide VAPT assessments and firewall management, then converting findings into remediation plans.</li>
+          <li><strong>Onboarding &amp; training:</strong> Raised security-awareness maturity org-wide by designing and leading cybersecurity training for every new hire across San Miguel Infrastructure's water companies.</li>
+          <li><strong>Infrastructure ownership:</strong> Ensured uninterrupted service for critical water infrastructure as sole Network and System Administrator across three companies simultaneously.</li>
+        </ul>
+      </div>
+    </div>
 
-    <!-- PROJECTS -->
-    <section id="projects">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="section-label">Projects</div>
-                <h2 class="section-title">GitHub Projects</h2>
-                <div class="section-line"></div>
-            </div>
-            <div id="projects-grid" class="projects-grid">
-                <div class="project-loading"><div class="spinner"></div><br>Loading repositories...</div>
-            </div>
-            <div class="reveal" style="margin-top:0.5rem;">
-                <a href="https://github.com/mjkulit03" target="_blank" rel="noopener noreferrer" class="projects-github-link">View all on GitHub →</a>
-            </div>
-        </div>
-    </section>
+    <div class="role">
+      <div class="role-date">2023 —<br>2024</div>
+      <div>
+        <h3 class="role-title">IT Specialist (Information Security)</h3>
+        <p class="role-company">San Miguel Holding Corporation</p>
+        <ul class="role-list">
+          <li><strong>Governance:</strong> Strengthened enterprise security posture across 23 business units by developing InfoSec governance policies and streamlining vulnerability management workflows.</li>
+          <li><strong>Incident response:</strong> Minimized business impact from security incidents by leading fast-resolution efforts for suspicious activity and cyberattacks.</li>
+          <li><strong>Digital forensics:</strong> Built out the organization's forensics capability, leading investigations with EnCase and Autopsy for SMHC / San Miguel Infrastructure.</li>
+          <li><strong>Training:</strong> Scaled a security-first culture by designing and delivering cybersecurity onboarding for new hires across all 23 business units.</li>
+        </ul>
+      </div>
+    </div>
 
-    <!-- TRAINING -->
-    <section id="training">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="section-label">Development</div>
-                <h2 class="section-title">Seminars &amp; Training</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="training-grid">
-                <div class="training-card reveal reveal-d1">
-                    <h3>🛡️ Cybersecurity &amp; Cloud</h3>
-                    <ul class="training-list">
-                        <li>Web Application Penetration Testing</li>
-                        <li>AWS Essentials</li>
-                        <li>Ethical Hacking using Kali Linux</li>
-                        <li>The Complete Networking Fundamentals Course</li>
-                        <li>Advanced WordPress for Professionals | SEO</li>
-                    </ul>
-                </div>
-                <div class="training-card reveal reveal-d2">
-                    <h3>📋 Governance &amp; Compliance</h3>
-                    <ul class="training-list">
-                        <li>VAPT (UP Diliman – 5 Days)</li>
-                        <li>ISO/IEC 27002: InfoSec Controls (ISACA Manila – 4 Days)</li>
-                        <li>RA10173: Data Privacy Training (NPC)</li>
-                        <li>ISO 27001:2013 InfoSec Compliance (Bankers Institute)</li>
-                        <li>Review of IT General Controls (ISACA Manila)</li>
-                        <li>Project Management (365 Careers Online)</li>
-                    </ul>
-                </div>
-                <div class="training-card reveal reveal-d3">
-                    <h3>🏦 Bank-Specific Technical</h3>
-                    <ul class="training-list">
-                        <li>Managing Technology and Cybersecurity Risk (BAIPHIL)</li>
-                        <li>Signature Examination &amp; Counterfeit Detection</li>
-                        <li>Anti-Money Laundering &amp; Business Continuity Plan</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="role">
+      <div class="role-date">2019 —<br>2023</div>
+      <div>
+        <h3 class="role-title">Systems Officer (Officer III)</h3>
+        <p class="role-company">Bank of Makati</p>
+        <ul class="role-list">
+          <li><strong>Project lead:</strong> Modernized core operations by spearheading customer record digitization and process automation, cutting manual handling.</li>
+          <li><strong>Regulatory compliance:</strong> Maintained full regulatory standing by managing and closing action plans across BSP, BIR, and parent-company IT audits.</li>
+          <li><strong>Governance:</strong> Reduced operational and security risk by developing and enforcing IT governance policies bank-wide.</li>
+          <li><strong>Vendor relations:</strong> Strengthened stakeholder confidence by managing vendor relationships and reporting IT initiatives directly to business leadership.</li>
+        </ul>
+      </div>
+    </div>
 
-    <!-- EDUCATION -->
-    <section id="education">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="section-label">Education</div>
-                <h2 class="section-title">Academic Background</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="edu-card reveal">
-                <div class="edu-icon">🎓</div>
-                <div class="edu-info">
-                    <h3>Bachelor of Science in Information Technology</h3>
-                    <div class="edu-school">STI College Recto</div>
-                    <div class="edu-year">2006 – 2010</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="role">
+      <div class="role-date">2017 —<br>2019</div>
+      <div>
+        <h3 class="role-title">IT Head (Deputy) / Information Security Officer / Asst. DPO</h3>
+        <p class="role-company">Yuanta Savings Bank Philippines</p>
+        <ul class="role-list">
+          <li><strong>Governance:</strong> Built the bank's information security governance program from the ground up as ISO and Assistant Data Protection Officer.</li>
+          <li><strong>Cybersecurity operations:</strong> Improved threat visibility by managing IDS/IPS reporting, proxy configuration, and annual firewall policy reviews.</li>
+          <li><strong>Infrastructure:</strong> Maintained continuous availability and security of the bank's IT infrastructure as Network and System Administrator.</li>
+          <li><strong>Auditing:</strong> Lowered compliance risk through regular security audits and IT risk assessments.</li>
+          <li><strong>People management:</strong> Grew departmental capability by recruiting, supervising, and developing IT personnel.</li>
+        </ul>
+      </div>
+    </div>
 
-    <!-- CONTACT -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="section-label">Contact</div>
-                <h2 class="section-title">Let's Connect</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-items reveal">
-                    <a href="mailto:jeff.manahan72@gmail.com" class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <div><div class="contact-label">Email</div><div class="contact-value">jeff.manahan72@gmail.com</div></div>
-                    </a>
-                    <a href="tel:+639665890319" class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div><div class="contact-label">Phone</div><div class="contact-value">0966 589 0319</div></div>
-                    </a>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div><div class="contact-label">Location</div><div class="contact-value">San Jose Del Monte, Bulacan</div></div>
-                    </div>
-                    <a href="https://www.linkedin.com/in/jeff-manahan-a697a583/" target="_blank" rel="noopener noreferrer" class="contact-item">
-                        <div class="contact-icon">💼</div>
-                        <div><div class="contact-label">LinkedIn</div><div class="contact-value">linkedin.com/in/jeff-manahan-a697a583</div></div>
-                    </a>
-                    <a href="https://github.com/mjkulit03" target="_blank" rel="noopener noreferrer" class="contact-item">
-                        <div class="contact-icon">🐙</div>
-                        <div><div class="contact-label">GitHub</div><div class="contact-value">github.com/mjkulit03</div></div>
-                    </a>
-                </div>
-                <div class="reveal reveal-d2">
-                    <h3 class="refs-title">Character References</h3>
-                    <div class="ref-card">
-                        <h4>Jennifer L. Suico</h4>
-                        <div class="ref-role">AVP Head, Systems &amp; Dev Dept – Bank of Makati</div>
-                        <div class="ref-phone">📞 0905 260 1301</div>
-                    </div>
-                    <div class="ref-card">
-                        <h4>Mr. Richard Bunda</h4>
-                        <div class="ref-role">Systems &amp; Dev Dept Officer – Bank of Makati</div>
-                        <div class="ref-phone">📞 0928 376 1409</div>
-                    </div>
-                    <div class="ref-card">
-                        <h4>Alex Galeon</h4>
-                        <div class="ref-role">InfoSec Consultant – SMHC</div>
-                        <div class="ref-phone">📞 0917 557 6549</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="role">
+      <div class="role-date">2013 —<br>2017</div>
+      <div>
+        <h3 class="role-title">IT Support &amp; Network Engineer Supervisor</h3>
+        <p class="role-company">Guevent Investments Dev. Corp</p>
+        <ul class="role-list">
+          <li><strong>Infrastructure lead:</strong> Led group-wide infrastructure delivery by supervising Cisco network configurations, firewall deployments, and IP Phone (PBX) rollouts.</li>
+          <li><strong>Reporting:</strong> Served as the primary escalation point for all group IT issues, reporting directly to the IT Director.</li>
+          <li><strong>People management:</strong> Developed technical talent by recruiting and supervising IT support personnel.</li>
+        </ul>
+      </div>
+    </div>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <p>© 2026 <span class="accent">JEFFREI EDMAR F. MANAHAN</span> · ALL SYSTEMS SECURE</p>
-        </div>
-    </footer>
+    <p class="early-career"><strong>Early career:</strong> Clearing Assistant, Tong Yang Savings Bank Inc. (2012–2013) — Marketing Staff / Graphic Artist, Trinity Marketing Corporation (2010–2012).</p>
+  </div>
+</section>
 
-    <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+<!-- CREDENTIALS -->
+<section id="credentials">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-kicker">CREDENTIALS</div>
+      <h2>Certifications</h2>
+    </div>
+    <table class="cert-table">
+      <thead>
+        <tr><th>Credential</th><th>Area</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fortinet Certified Associate (FCA)</td><td class="muted">Cybersecurity</td><td class="cert-status">Valid through May 2027</td></tr>
+        <tr><td>Fortinet Certified Fundamentals (FCF)</td><td class="muted">Cybersecurity</td><td class="cert-status">Valid through Jul 2027</td></tr>
+        <tr><td>Fortinet FortiGate 7.4 Operator</td><td class="muted">Fortinet</td><td class="cert-status">Issued May 2025</td></tr>
+        <tr><td>Fortinet NSE 1</td><td class="muted">Certified in Cybersecurity</td><td class="cert-status">Valid through Jul 2027</td></tr>
+        <tr><td>Fortinet NSE 2</td><td class="muted">Certified in Cybersecurity</td><td class="cert-status">Valid through Jul 2027</td></tr>
+        <tr><td>Fortinet NSE 3</td><td class="muted">Certified in Cybersecurity</td><td class="cert-status">Valid through May 2027</td></tr>
+        <tr><td>Getting Started in Cybersecurity 3.0</td><td class="muted">Fortinet</td><td class="cert-status">Issued May 2025</td></tr>
+        <tr><td>Intro to the Threat Landscape 3.0</td><td class="muted">Fortinet</td><td class="cert-status">Issued Jul 2025</td></tr>
+      </tbody>
+    </table>
 
-    <script>
-        // MATRIX RAIN
-        const canvas = document.getElementById('matrix-bg');
-        const ctx = canvas.getContext('2d');
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        const chars = '\u30A2\u30A4\u30A6\u30A8\u30AA\u30AB\u30AD\u30AF\u30B1\u30B3\u30B5\u30B7\u30B9\u30BB\u30BD\u30BF\u30C1\u30C4\u30C6\u30C8\u30CA\u30CB\u30CC\u30CD\u30CE\u30CF\u30D2\u30D5\u30D8\u30DB\u30DE\u30DF\u30E0\u30E1\u30E2\u30E4\u30E6\u30E8\u30E9\u30EA\u30EB\u30EC\u30ED\u30EF\u30F2\u30F30123456789ABCDEF';
-        const fontSize = 14;
-        let columns = Math.floor(canvas.width / fontSize);
-        let drops = Array(columns).fill(1);
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(3,8,16,0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00f0ff';
-            ctx.font = fontSize + 'px JetBrains Mono';
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { drops[i] = 0; }
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 50);
+    <div class="training-cols">
+      <div>
+        <h4>Advanced cybersecurity &amp; cloud</h4>
+        <ul>
+          <li>Web Application Penetration Testing</li>
+          <li>AWS Essentials</li>
+          <li>Ethical Hacking using Kali Linux</li>
+          <li>Complete Networking Fundamentals</li>
+          <li>Advanced WordPress / SEO</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Governance &amp; compliance</h4>
+        <ul>
+          <li>VAPT — UP Diliman (5 days)</li>
+          <li>ISO/IEC 27002: InfoSec Controls — ISACA Manila</li>
+          <li>RA 10173 Data Privacy — National Privacy Commission</li>
+          <li>ISO 27001:2013 InfoSec Compliance — Bankers Institute PH</li>
+          <li>Review of IT General Controls — ISACA Manila</li>
+          <li>Project Management — 365 Careers Online</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Bank-specific technical</h4>
+        <ul>
+          <li>Managing Technology &amp; Cybersecurity Risk — BAIPHIL</li>
+          <li>Signature Examination &amp; Counterfeit Detection</li>
+          <li>Anti-Money Laundering &amp; Business Continuity Plan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // MOBILE NAV
-        const toggle = document.getElementById('mobileToggle');
-        const nav = document.getElementById('navLinks');
-        toggle.addEventListener('click', () => {
-            nav.classList.toggle('open');
-            toggle.textContent = nav.classList.contains('open') ? '\u2715' : '\u2630';
-        });
-        nav.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', () => { nav.classList.remove('open'); toggle.textContent = '\u2630'; });
-        });
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-kicker">BACKGROUND</div>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-row">
+      <div>
+        <div class="edu-title">Bachelor of Science in Information Technology</div>
+        <div class="edu-meta">STI College Recto</div>
+      </div>
+      <div class="edu-date">2006 – 2010</div>
+    </div>
+  </div>
+</section>
 
-        // HEADER SCROLL
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container contact-grid">
+    <div>
+      <div class="sec-head">
+        <div class="sec-kicker">CONTACT</div>
+        <h2>Let's talk</h2>
+      </div>
+      <ul class="contact-list">
+        <li>
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg></div>
+          <a href="mailto:jeff.manahan72@gmail.com">
+            <div class="contact-label">EMAIL</div>
+            <div class="contact-value">jeff.manahan72@gmail.com</div>
+          </a>
+        </li>
+        <li>
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 4 6a2 2 0 0 1 2-2Z"/></svg></div>
+          <a href="tel:+639665890319">
+            <div class="contact-label">PHONE</div>
+            <div class="contact-value">0966 589 0319</div>
+          </a>
+        </li>
+        <li>
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg></div>
+          <div>
+            <div class="contact-label">LOCATION</div>
+            <div class="contact-value">San Jose Del Monte, Bulacan</div>
+          </div>
+        </li>
+        <li>
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M12 17v-4.5a2 2 0 0 1 4 0V17M12 17v-7"/></svg></div>
+          <a href="https://www.linkedin.com/in/jeff-manahan-a697a583/" target="_blank" rel="noopener noreferrer">
+            <div class="contact-label">LINKEDIN</div>
+            <div class="contact-value">linkedin.com/in/jeff-manahan-a697a583</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div class="refs-title">CHARACTER REFERENCES</div>
+      <div class="ref-item">
+        <h4>Jennifer L. Suico</h4>
+        <div class="ref-role">AVP Head, Systems &amp; Development Dept. — Bank of Makati</div>
+        <div class="ref-phone">0905 260 1301</div>
+      </div>
+      <div class="ref-item">
+        <h4>Richard Bunda</h4>
+        <div class="ref-role">Officer, Systems &amp; Development Dept. — Bank of Makati</div>
+        <div class="ref-phone">0928 376 1409</div>
+      </div>
+      <div class="ref-item">
+        <h4>Alex Galeon</h4>
+        <div class="ref-role">InfoSec Consultant — SMHC</div>
+        <div class="ref-phone">0917 557 6549</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // ACTIVE NAV
-        const sections = document.querySelectorAll('section[id]');
-        const navItems = document.querySelectorAll('.nav-links a');
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href') === '#' + current) item.classList.add('active');
-            });
-        });
+<footer>
+  <div class="container">
+    <p>© 2026 Jeffrei Edmar F. Manahan</p>
+    <a href="#hero" class="back-top">Back to top</a>
+  </div>
+</footer>
 
-        // SCROLL REVEAL
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+<script>
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 30));
 
-        // BACK TO TOP
-        const backTop = document.getElementById('backTop');
-        window.addEventListener('scroll', () => { backTop.classList.toggle('show', window.scrollY > 500); });
-        backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
 
-        // SMOOTH SCROLL
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const t = document.querySelector(this.getAttribute('href'));
-                if (t) t.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+  // 3D tilt on the "at a glance" card stack
+  const panelWrap = document.getElementById('panel3d');
+  const heroPanel = document.getElementById('heroPanel');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (panelWrap && heroPanel && !prefersReducedMotion) {
+    panelWrap.addEventListener('mousemove', (e) => {
+      const rect = panelWrap.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      const rotY = px * 16;
+      const rotX = -py * 16;
+      heroPanel.style.transform = `perspective(1400px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(14px)`;
+    });
+    panelWrap.addEventListener('mouseleave', () => {
+      heroPanel.style.transform = 'perspective(1400px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    });
+  }
 
-        // GITHUB REPOS
-        const GITHUB_USER = 'mjkulit03';
-        const langColors = {
-            JavaScript:'#f1e05a',TypeScript:'#3178c6',Python:'#3572A5',HTML:'#e34c26',
-            CSS:'#563d7c',Java:'#b07219','C++':'#f34b7d',C:'#555555',Go:'#00ADD8',
-            Rust:'#dea585',PHP:'#4F5D95',Ruby:'#701516',Shell:'#89e051',Dart:'#00B4AB',
-            Kotlin:'#A97BFF',Swift:'#F05138','Jupyter Notebook':'#DA5B0B',Vue:'#41b883',
-            SCSS:'#c6538c',Lua:'#000080',PowerShell:'#012456',Batchfile:'#C1F12E',
-            'Visual Basic':'#945db7',Arduino:'#bd79d1',Dockerfile:'#384d54',Makefile:'#427819'
-        };
-        async function fetchRepos() {
-            const grid = document.getElementById('projects-grid');
-            try {
-                const res = await fetch('https://api.github.com/users/' + GITHUB_USER + '/repos?sort=updated&per_page=12');
-                const repos = await res.json();
-                if (!repos.length) { grid.innerHTML = '<div class="project-loading">No public repositories found.</div>'; return; }
-                grid.innerHTML = repos.map(function(repo) {
-                    const lang = repo.language || 'Unknown';
-                    const color = langColors[lang] || '#6e7681';
-                    const updated = new Date(repo.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                    const desc = repo.description || 'No description provided.';
-                    return '<div class="project-card reveal">' +
-                        '<div class="project-top">' +
-                            '<div class="project-icon">\uD83D\uDCC1</div>' +
-                            '<a href="' + repo.html_url + '" target="_blank" rel="noopener noreferrer" class="project-external">View \u2197</a>' +
-                        '</div>' +
-                        '<h3 class="project-name"><a href="' + repo.html_url + '" target="_blank" rel="noopener noreferrer">' + repo.name + '</a></h3>' +
-                        '<p class="project-desc">' + desc + '</p>' +
-                        '<div class="project-meta">' +
-                            '<span class="project-lang"><span class="lang-dot" style="background:' + color + '"></span>' + lang + '</span>' +
-                            (repo.forks_count > 0 ? '<span class="project-stat">\uD83C\uDF74 ' + repo.forks_count + '</span>' : '') +
-                            (repo.stargazers_count > 0 ? '<span class="project-stat">\u2B50 ' + repo.stargazers_count + '</span>' : '') +
-                            '<span class="project-updated">' + updated + '</span>' +
-                        '</div>' +
-                    '</div>';
-                }).join('');
-                document.querySelectorAll('#projects-grid .reveal').forEach(function(el) { observer.observe(el); });
-            } catch (err) {
-                grid.innerHTML = '<div class="project-loading">Failed to load repositories.</div>';
-            }
-        }
-        fetchRepos();
-    </script>
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 140) current = s.id; });
+    navItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === '#' + current));
+  });
+</script>
 </body>
 </html>
